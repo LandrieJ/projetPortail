@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+ 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root{
+  font-family: "Poppins", sans-serif;
+  background-color:rgb(238, 238, 243);
+}
+/* Ajoutez ce code dans votre fichier CSS */
+/* Ajoutez ce code dans votre fichier CSS */
+/* Définir l'animation de translation */
+/* Définir l'animation de translation */
+@keyframes translate {
+  0% {
+    transform: translateX(100%); /* Commence à droite de l'écran */
+  }
+  50% {
+    transform: translateX(0%);   /* Centré horizontalement */
+  }
+  100% {
+    transform: translateX(-100%); /* Se termine à gauche de l'écran */
+  }
+}
+
+/* Appliquer l'animation */
+.animate-translate {
+  animation: translate 30s ease-in-out infinite;
+}
+
+.custom-modal {
+  background: transparent !important; /* Enlever le fond */
+  border: none !important; /* Enlever la bordure */
+  padding: 0; /* Optionnel : pour supprimer le padding */
+}
