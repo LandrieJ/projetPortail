@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout, setMe } from '../../redux/action/auth.action';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Settings() {
     const [password, setOldPassword] = useState('');
     const [oldPassword, setOldPassword1] = useState('');
@@ -23,7 +25,7 @@ export default function Settings() {
         setLoader(true);
         setErrors(null);
 
-        await axios.post(`http://localhost:5000/api/v1/change-email`, { email: Newdemail, password: oldPassword }, {
+        await axios.post(`${API_BASE_URL}/change-email`, { email: Newdemail, password: oldPassword }, {
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": "Bearer " + jwt_access
@@ -51,7 +53,7 @@ export default function Settings() {
         setLoader(true);
         setErrors(null);
 
-        await axios.post(`http://localhost:5000/api/v1/change-password`, { password: password, newpassword: newPassword }, {
+        await axios.post(`${API_BASE_URL}/change-password`, { password: password, newpassword: newPassword }, {
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": "Bearer " + jwt_access

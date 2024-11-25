@@ -4,6 +4,8 @@ import { getMe } from '../../redux/action/auth.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function ModalEditUser({ closeModal, userData, updateUser, fetchData }) {
     const dispatch = useDispatch();
     const { me } = useSelector(state => state.auth);
@@ -28,7 +30,7 @@ function ModalEditUser({ closeModal, userData, updateUser, fetchData }) {
         e.preventDefault();
         setErrors(null);
         setLoading(true); // Début du chargement
-        axios.put(`http://localhost:5000/api/v1/users/${userData.id}`, {
+        axios.put(`${API_BASE_URL}/users/${userData.id}`, {
                 prenom,
                 nom,
                 role,

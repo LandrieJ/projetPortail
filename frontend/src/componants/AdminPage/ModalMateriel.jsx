@@ -4,6 +4,9 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { logout } from '../../redux/action/auth.action';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
 function ModalMateriel({ isOpen, onClose, fetchData }) {
   const jwt_access = localStorage.getItem('jwt_access');
   const dispatch = useDispatch();
@@ -53,7 +56,7 @@ function ModalMateriel({ isOpen, onClose, fetchData }) {
     if (image) formData.append('image', image); // Ajouter l'image seulement si elle est sélectionnée
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/materiels', formData, {
+      const response = await axios.post(`${API_BASE_URL}/materiels`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${jwt_access}`,

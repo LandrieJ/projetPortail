@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navbar, Dropdown } from 'flowbite-react';
 import { logout, getMe } from '../../redux/action/auth.action';
+import { NavLink } from 'react-router-dom'; // Import de NavLink
 import logo from '../../assets/LOGO.png';
 
 function NavbarComponent() {
@@ -42,6 +43,18 @@ function NavbarComponent() {
               <span className="block truncate text-sm font-medium">{me?.email || 'name@flowbite.com'}</span>
             </Dropdown.Header>
             <Dropdown.Divider />
+            {/* Affiche le lien Admin seulement si l'utilisateur est un admin */}
+            {me?.role === 'admin' && (
+  <Navbar.Link
+    as={NavLink}
+    to="/admin"
+    className="block text-sm font-medium text-black hover:bg-gray-700 hover:text-white rounded-lg text-center px-2 py-2 transition-all duration-200"
+    activeClassName="bg-gray-800 text-gray-100"
+  >
+    Admin
+  </Navbar.Link>
+)}
+
             <Dropdown.Item onClick={handleLogout}>Deconnexion</Dropdown.Item>
           </Dropdown>
 
@@ -50,15 +63,7 @@ function NavbarComponent() {
         </div>
 
         {/* Menu links */}
-        <Navbar.Collapse>
-          <Navbar.Link href="#" active>
-            Home
-          </Navbar.Link>
-          {me?.role === 'admin' && <Navbar.Link href="/admin">Admin</Navbar.Link>}
-          <Navbar.Link href="#">About</Navbar.Link>
-          <Navbar.Link href="#">Services</Navbar.Link>
-          <Navbar.Link href="#">Contact</Navbar.Link>
-        </Navbar.Collapse>
+        {/*  */}
       </Navbar>
     </>
   );

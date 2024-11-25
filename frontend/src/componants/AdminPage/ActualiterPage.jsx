@@ -9,6 +9,9 @@ import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import ModalImage from './ModalImage';
 import ModalActualite from './ModalActualite';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_IMG = import.meta.env.VITE_API_BASE_IMG;
+
 function ActualiterPage() {
   const jwt_access = localStorage.getItem('jwt_access');
   const dispatch = useDispatch();
@@ -26,7 +29,7 @@ function ActualiterPage() {
   // Fetch des actualités
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/v1/actualite${location.search}`, {
+      const response = await axios.get(`${API_BASE_URL}/actualite${location.search}`, {
         headers: { Authorization: `Bearer ${jwt_access}` },
       });
       setActualites(response.data.items || []);
@@ -45,7 +48,7 @@ function ActualiterPage() {
   const handleEdit = async (updatedActualite) => {
     if (selectedActualite) {
       try {
-        await axios.put(`http://localhost:5000/api/v1/actualite/${selectedActualite.id}`, updatedActualite, {
+        await axios.put(`${API_BASE_URL}/actualite/${selectedActualite.id}`, updatedActualite, {
           headers: { Authorization: `Bearer ${jwt_access}` },
         });
         fetchData();
@@ -58,7 +61,7 @@ function ActualiterPage() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/v1/actualite/${id}`, {
+      await axios.delete(`${API_BASE_URL}/actualite/${id}`, {
         headers: { "Authorization": `Bearer ${jwt_access}` }
       });
       fetchData(); 
@@ -100,11 +103,11 @@ function ActualiterPage() {
           {actualite.imgUrl && (
             <div className="relative w-full h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96 2xl:h-[400px] mb-8">
               <img
-                src={`http://localhost:5000/uploads/${actualite.imgUrl}`}
+                src={`${API_BASE_IMG}${actualite.imgUrl}`}
                 alt="Actualité"
                 className="w-full h-64 object-cover rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
                 onClick={() => {
-                  setSelectedImage(`http://localhost:5000/uploads/${actualite.imgUrl}`);
+                  setSelectedImage(`${API_BASE_IMG}${actualite.imgUrl}`);
                   setShowImageModal(true);
                 }}
               />
@@ -197,6 +200,7 @@ function ActualiterPage() {
           isOpen={showImageModal} 
           onRequestClose={() => setShowImageModal(false)} 
           imageSrc={selectedImage} 
+          
         />
       )}
     </div>

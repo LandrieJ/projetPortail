@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function HomePage() {
     const [data, setData] = useState({ items: [] }); // Initialiser avec un objet pour éviter les erreurs
     const [data1, setData1] = useState({ items: [] }); // Même chose pour les matériels
@@ -14,7 +16,7 @@ export default function HomePage() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/v1/users${location.search}`, {
+            const response = await axios.get(`${API_BASE_URL}/users${location.search}`, {
                 headers: {
                     "Authorization": `Bearer ${jwt_access}`
                 }
@@ -27,7 +29,7 @@ export default function HomePage() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/v1/materiels${location.search}`, {
+            const response = await axios.get(`${API_BASE_URL}/materiels${location.search}`, {
                 headers: {
                     "Authorization": `Bearer ${jwt_access}`,
                 },

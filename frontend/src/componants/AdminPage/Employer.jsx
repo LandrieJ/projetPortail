@@ -7,6 +7,9 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function Employer() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -19,7 +22,7 @@ function Employer() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/v1/users${location.search}`, {
+      const response = await axios.get(`${API_BASE_URL}/users${location.search}`, {
         headers: {
           "Authorization": "Bearer " + jwt_access
         }
@@ -46,7 +49,7 @@ function Employer() {
 
   const updateUser = async (id, updatedData) => {
     try {
-      await axios.put(`http://localhost:5000/api/v1/users/${id}`, updatedData, {
+      await axios.put(`${API_BASE_URL}/users/${id}`, updatedData, {
         headers: {
           "Authorization": "Bearer " + jwt_access
         }
@@ -60,7 +63,7 @@ function Employer() {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/v1/users/${id}`, {
+      await axios.delete(`${API_BASE_URL}/users/${id}`, {
         headers: {
           "Authorization": "Bearer " + jwt_access
         }

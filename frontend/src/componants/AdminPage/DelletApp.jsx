@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function DelletApp({ isOpen, onClose, materielData, deleteMateriel }) {
   const jwt_access = localStorage.getItem('jwt_access');
   const [id, setId] = useState(materielData?.id || null);
@@ -18,7 +20,7 @@ function DelletApp({ isOpen, onClose, materielData, deleteMateriel }) {
   const handleDelete = async () => {
     setIsLoading(true); 
     try {
-      await axios.delete(`http://localhost:5000/api/v1/materiels/${id}`, {
+      await axios.delete(`${API_BASE_URL}/materiels/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + jwt_access

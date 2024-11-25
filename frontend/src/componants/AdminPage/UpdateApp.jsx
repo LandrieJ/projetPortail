@@ -4,6 +4,9 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { getMe } from '../../redux/action/auth.action';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_IMG = import.meta.env.VITE_API_BASE_IMG;
+
 function UpdateApp({ isOpen, onClose, materielData, onUpdateMateriel }) {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.auth);
@@ -48,7 +51,7 @@ function UpdateApp({ isOpen, onClose, materielData, onUpdateMateriel }) {
     }
 
     try {
-      const res = await axios.put(`http://localhost:5000/api/v1/materiels/${materielData.id}`, formData, {
+      const res = await axios.put(`${API_BASE_URL}/materiels/${materielData.id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${jwt_access}`,

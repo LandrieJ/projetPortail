@@ -3,6 +3,9 @@ import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_IMG = import.meta.env.VITE_API_BASE_IMG;
+
 function ListProduct() {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
@@ -21,7 +24,7 @@ function ListProduct() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/v1/materiels${location.search}`, {
+      const response = await axios.get(`${API_BASE_URL}/materiels${location.search}`, {
         headers: {
           "Authorization": `Bearer ${jwt_access}`
         }
@@ -113,7 +116,7 @@ function ListProduct() {
               <div key={materiel.id} className="flex flex-col items-center p-3  rounded-s-full shadow-transparent transition-transform transform hover:scale-105">
                 <a href={materiel.url} target="_blank" rel="noopener noreferrer">
                   <img
-                    src={materiel.image ? `http://localhost:5000/uploads/${materiel.image}` : 'https://via.placeholder.com/150'}
+                    src={materiel.image ? `${API_BASE_IMG}${materiel.image}` : 'https://via.placeholder.com/150'}
                     alt={materiel.nom}
                     className="w-[120px] h-[100px] object-cover rounded-lg"
                     onError={(e) => {

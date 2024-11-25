@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios'; 
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  
+
 function MotOublier() {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -34,7 +37,7 @@ function MotOublier() {
 
     try {
         const { data } = await axios.post(
-            'http://localhost:5000/api/v1/resetPassword', 
+            `${API_BASE_URL}/resetPassword`, 
             { email, newPassword, confirmPassword }, // Ajout de confirmPassword
             {
                 headers: {

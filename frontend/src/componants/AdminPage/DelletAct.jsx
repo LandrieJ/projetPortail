@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 import { useDispatch } from 'react-redux'; // Assurez-vous d'importer useDispatch
 // import { logout } from './path_to_your_actions'; // Remplacez par le bon chemin
 // import { logout } from '../../redux/action/auth.action';
@@ -24,7 +27,7 @@ function DelletAct({ actualiteData, onDelete, onClose }) {
   const handleDelete = async () => {
     setIsLoading(true);
     try {
-      await axios.delete(`http://localhost:5000/api/v1/actualite/${id}`, {
+      await axios.delete(`${API_BASE_URL}/actualite/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${jwt_access}`

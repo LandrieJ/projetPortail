@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function ModalDeleteUser({ closeModal, userData, deleteUser, fetchData }) {
     const jwt_access = localStorage.getItem('jwt_access');
@@ -19,7 +20,7 @@ function ModalDeleteUser({ closeModal, userData, deleteUser, fetchData }) {
     const handleDelete = async () => {
         setIsLoading(true);  // Démarre l'indicateur de chargement
         try {
-            const res = await axios.delete(`http://localhost:5000/api/v1/users/${id}`, {
+            const res = await axios.delete(`${API_BASE_URL}/users/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + jwt_access
@@ -59,9 +60,9 @@ function ModalDeleteUser({ closeModal, userData, deleteUser, fetchData }) {
                         disabled={isLoading}  // Désactiver le bouton pendant le chargement
                     >
                         Annuler
-                    </button>
+                    </button> 
                     <button
-                        type="button"
+                        type="button" 
                         onClick={handleDelete}
                         className={`bg-red-500 text-white px-4 py-2 rounded-md ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                         disabled={isLoading}  // Désactiver le bouton pendant le chargement

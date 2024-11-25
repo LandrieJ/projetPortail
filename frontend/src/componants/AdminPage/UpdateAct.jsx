@@ -5,6 +5,9 @@ import axios from 'axios';
 import { getMe } from '../../redux/action/auth.action';
 import { Circles } from 'react-loader-spinner';  // Import du spinner
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
 function UpdateAct({ actualiteData, onClose, onUpdate }) {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.auth);
@@ -60,7 +63,7 @@ function UpdateAct({ actualiteData, onClose, onUpdate }) {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/v1/actualite/${actualiteData.id}`, formData, {
+      await axios.put(`${API_BASE_URL}/actualite/${actualiteData.id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${jwt_access}`,

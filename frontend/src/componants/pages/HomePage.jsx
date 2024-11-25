@@ -11,7 +11,7 @@ function HomePage() {
       <Heros />
       <main className="flex-grow p-6">
         <ListProduct />
-       <ActualiterPage/>
+       <ActualiterPage/>  
       </main>
     </div>
   );

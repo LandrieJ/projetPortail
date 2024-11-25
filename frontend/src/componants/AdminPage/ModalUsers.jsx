@@ -4,10 +4,14 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { logout } from '../../redux/action/auth.action';
 
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function ModalUsers({ closeModal, fetchData }) {
   const jwt_access = localStorage.getItem('jwt_access');
   const dispatch = useDispatch();
   const location = useLocation();
+
 
   const [nom, setNom] = useState("");
   const [nomTouch, setNomTouch] = useState(false);
@@ -36,7 +40,7 @@ function ModalUsers({ closeModal, fetchData }) {
     setError(null);
 
     try {
-      await axios.post('http://localhost:5000/api/v1/users', { nom, prenom, email, password, role }, {
+      await axios.post(`${API_BASE_URL}/users`, { nom, prenom, email, password, role }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwt_access}`

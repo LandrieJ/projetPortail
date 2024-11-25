@@ -1,6 +1,8 @@
 import axios from "axios";
 import { ME_REQUEST, ME_SUCESS } from "../constant/auth.constant"
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_IMG = import.meta.env.VITE_API_BASE_IMG;
 export const getMe = (redirect=null) => async (dispatch) => {
     try {
         const jwt_access = localStorage.getItem('jwt_access');
@@ -9,7 +11,7 @@ export const getMe = (redirect=null) => async (dispatch) => {
             type: ME_REQUEST
         });
 
-        const { data } = await axios.get(`http://localhost:5000/api/v1/auth/me`, {
+        const { data } = await axios.get(`${API_BASE_URL}/auth/me`, {
                                         headers: {
                                             'Authorization': 'Bearer ' + jwt_access
                                         }                            

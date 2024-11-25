@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/action/auth.action';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const ModalActualite = ({ isOpen, onRequestClose, fetchActualites }) => {
   const jwt_access = localStorage.getItem('jwt_access');
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const ModalActualite = ({ isOpen, onRequestClose, fetchActualites }) => {
     if (image) formData.append('image', image);
 
     try {
-      await axios.post('http://localhost:5000/api/v1/actualite', formData, {
+      await axios.post(`${API_BASE_URL}/actualite`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${jwt_access}`,

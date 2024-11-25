@@ -6,6 +6,10 @@ import UpdateApp from './UpdateApp';
 import DelletApp from './DelletApp';
 import { useLocation } from 'react-router-dom';
 
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_IMG = import.meta.env.VITE_API_BASE_IMG;
+
 function Materiel() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedMateriel, setSelectedMateriel] = useState(null);
@@ -18,7 +22,7 @@ function Materiel() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/v1/materiels${location.search}`, {
+      const response = await axios.get(`${API_BASE_URL}/materiels${location.search}`, {
         headers: {
           Authorization: `Bearer ${jwt_access}`,
         },
@@ -80,7 +84,7 @@ function Materiel() {
                   <td className="px-4 py-2 border-b">{materiel.nom}</td>
                   <td className="px-4 py-2 border-b text-center">
                     <img
-                      src={materiel.image ? `http://localhost:5000/uploads/${materiel.image}` : 'https://via.placeholder.com/150'}
+                      src={materiel.image ? `${API_BASE_IMG}${materiel.image}` : 'https://via.placeholder.com/150'}
                       alt={materiel.nom}
                       className="w-10 h-10 object-cover"
                     />
