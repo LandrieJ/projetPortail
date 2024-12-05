@@ -16,10 +16,12 @@ const app = express();
 var corsOptions = {
     origin: [
         "http://localhost:3000", 
-        "http://192.168.8.100:3000", 
-        "http://192.168.8.101:3000", 
-        "http://192.168.8.102:3000",
-        "http://localhost:5173"  // Ajout de l'origine du front-end (React/Vite)
+        "http://192.168.43.137:3000", 
+        "http://192.168.43.138:3000", 
+        "http://192.168.43.139:3000",
+        "http://localhost:5173",
+        "http://192.168.56.1:3000",
+        "http://192.168.43.137:5173"  // Ajout de l'origine du front-end (React/Vite)
     ]
 };
 

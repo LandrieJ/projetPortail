@@ -8,6 +8,7 @@ import DelletAct from './DelletAct';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import ModalImage from './ModalImage';
 import ModalActualite from './ModalActualite';
+import CardActualite from './CardActualite';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const API_BASE_IMG = import.meta.env.VITE_API_BASE_IMG;
@@ -22,16 +23,16 @@ function ActualiterPage() {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedActualite, setSelectedActualite] = useState(null);
-  const [showImageModal, setShowImageModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [hoveredId, setHoveredId] = useState(null);
+
 
   // Fetch des actualités
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/actualite${location.search}`, {
         headers: { Authorization: `Bearer ${jwt_access}` },
+        
       });
+      console.log(jwt_access)
       setActualites(response.data.items || []);
     } catch (error) {
       console.error('Erreur lors de la récupération des données :', error);
@@ -44,6 +45,7 @@ function ActualiterPage() {
   useEffect(() => {
     fetchData();
   }, [location]);
+
 
   const handleEdit = async (updatedActualite) => {
     if (selectedActualite) {
@@ -72,74 +74,11 @@ function ActualiterPage() {
   };
 
   // Fonction pour déterminer la couleur de fond
-  const getBackgroundColor = (titre) => {
-    switch (titre) {
-      case 'DCN':
-        return 'bg-gray-400'; // Gris
-      case 'Pac Antananarivo':
-        return 'bg-blue-500'; // Bleu
-      case 'Pac Fianarantsoa':
-        return 'bg-green-500'; // Vert
-      case 'Pac Majunga':
-        return 'bg-red-500'; // Rouge
-      default:
-        return 'bg-white'; // Couleur par défaut
-    }
-  };
 
   // Rendu des actualités
   const renderActualites = () => {
-    return actualites.map((actualite) => (
-      <div key={actualite.id} className="py-10 flex justify-center items-center min-h-[200px]">
-        <div 
-          className={`flex flex-col items-center w-full max-w-md justify-center p-6 border-2 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 ${getBackgroundColor(actualite.titre)}`}
-          onMouseEnter={() => setHoveredId(actualite.id)}
-          onMouseLeave={() => setHoveredId(null)}
-        >
-          <h2 className="font-semibold text-xl text-center mb-4 text-white">
-            {actualite.titre}
-          </h2>
-
-          {actualite.imgUrl && (
-            <div className="relative w-full h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96 2xl:h-[400px] mb-8">
-              <img
-                src={`${API_BASE_IMG}${actualite.imgUrl}`}
-                alt="Actualité"
-                className="w-full h-64 object-cover rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
-                onClick={() => {
-                  setSelectedImage(`${API_BASE_IMG}${actualite.imgUrl}`);
-                  setShowImageModal(true);
-                }}
-              />
-
-              {me?.role === 'admin' && hoveredId === actualite.id && (
-                <div className="absolute top-2 right-2 flex space-x-2">
-                  <button
-                    onClick={() => {
-                      setSelectedActualite(actualite);
-                      setShowUpdateModal(true);
-                    }}
-                    className="bg-blue-500 text-white py-2 px-4 rounded-lg flex items-center justify-center hover:bg-blue-300 transition-colors duration-200"
-                  >
-                    <FaEdit className="mr-2" />
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setSelectedActualite(actualite);
-                      setShowDeleteModal(true);
-                    }}
-                    className="bg-red-500 text-white py-2 px-4 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors duration-200"
-                  >
-                    <FaTrash className="mr-2" />
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    ));
+    return actualites.map((actualite) => (<CardActualite actualite={actualite} setShowUpdateModal={setShowUpdateModal} setShowDeleteModal={setShowDeleteModal} setSelectedActualite={setSelectedActualite}/>)
+    );
   };
 
   return (
@@ -195,14 +134,9 @@ function ActualiterPage() {
         </div>
       )}
 
-      {showImageModal && (
-        <ModalImage 
-          isOpen={showImageModal} 
-          onRequestClose={() => setShowImageModal(false)} 
-          imageSrc={selectedImage} 
-          
-        />
-      )}
+ 
+        
+  
     </div>
   );
 }
